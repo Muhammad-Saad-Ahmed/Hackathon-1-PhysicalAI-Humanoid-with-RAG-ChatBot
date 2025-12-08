@@ -1,0 +1,261 @@
+# API Contract: Textbook Generation and RAG Chatbot
+
+## OpenAPI Specification
+
+```yaml
+openapi: 3.0.1
+info:
+  title: Textbook Generation and RAG Chatbot API
+  description: API for generating textbooks and querying them via RAG chatbot
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://textbook-generation-api.onrender.com
+    description: Production server
+
+paths:
+  /v1/textbooks:
+    post:
+      summary: Generate a new textbook
+      description: Creates a new textbook based on provided parameters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateTextbookRequest'
+      responses:
+        '200':
+          description: Successfully initiated textbook generation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateTextbookResponse'
+        '400':
+          description: Invalid input parameters
+        '500':
+          description: Internal server error
+
+  /v1/textbooks/{textbook_id}:
+    get:
+      summary: Get textbook details
+      description: Retrieve information about a specific textbook
+      parameters:
+        - name: textbook_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Textbook details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbook'
+        '404':
+          description: Textbook not found
+        '500':
+          description: Internal server error
+
+  /v1/chat:
+    post:
+      summary: Query the RAG chatbot
+      description: Send a query to the chatbot with optional context
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatQueryRequest'
+      responses:
+        '200':
+          description: Chat response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatQueryResponse'
+        '400':
+          description: Invalid query parameters
+        '500':
+          description: Internal server error
+
+  /v1/index:
+    post:
+      summary: Trigger textbook indexing
+      description: Admin-only endpoint to re-index textbook content for RAG
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IndexRequest'
+      responses:
+        '200':
+          description: Indexing initiated successfully
+        '401':
+          description: Unauthorized access
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    GenerateTextbookRequest:
+      type: object
+      required:
+        - subject_area
+        - target_audience
+        - chapter_topics
+      properties:
+        subject_area:
+          type: string
+          description: The subject area for the textbook
+          example: "Physical AI and Humanoid Robotics"
+        target_audience:
+          type: string
+          description: The target audience level
+          example: "University"
+        chapter_topics:
+          type: array
+          items:
+            type: string
+          description: List of chapter topics to include
+          example: ["Introduction to Physical AI", "Kinematics and Motion Planning"]
+        style_preferences:
+          type: object
+          properties:
+            include_exercises:
+              type: boolean
+              default: true
+            include_summaries:
+              type: boolean
+              default: true
+            include_diagrams:
+              type: boolean
+              default: true
+        format_preferences:
+          type: object
+          properties:
+            font_size:
+              type: string
+              enum: [small, medium, large]
+              default: medium
+            layout:
+              type: string
+              enum: [standard, compact, spacious]
+              default: standard
+
+    GenerateTextbookResponse:
+      type: object
+      required:
+        - textbook_id
+        - status
+      properties:
+        textbook_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the generated textbook
+        status:
+          type: string
+          enum: [success, queued, error]
+          description: Status of the generation process
+        estimated_completion:
+          type: integer
+          description: Estimated time in seconds until completion (optional)
+
+    Textbook:
+      type: object
+      required:
+        - id
+        - title
+        - subject_area
+        - target_audience
+        - created_at
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        subject_area:
+          type: string
+        target_audience:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [draft, generating, completed, failed]
+        export_formats:
+          type: array
+          items:
+            type: string
+
+    ChatQueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The question or query to ask
+          example: "Explain the difference between forward and inverse kinematics"
+        context_id:
+          type: string
+          description: Optional context identifier (chapter_id or section_id)
+        session_id:
+          type: string
+          format: uuid
+          description: Optional session identifier for conversation history
+
+    ChatQueryResponse:
+      type: object
+      required:
+        - response
+      properties:
+        response:
+          type: string
+          description: The chatbot's response to the query
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+        session_id:
+          type: string
+          format: uuid
+          description: The session identifier (newly created if not provided)
+
+    Source:
+      type: object
+      properties:
+        content_id:
+          type: string
+          description: ID of the source content
+        title:
+          type: string
+          description: Title of the source
+        relevance_score:
+          type: number
+          format: float
+          description: Relevance score between 0 and 1
+
+    IndexRequest:
+      type: object
+      required:
+        - textbook_id
+      properties:
+        textbook_id:
+          type: string
+          format: uuid
+          description: ID of textbook to re-index
+```
