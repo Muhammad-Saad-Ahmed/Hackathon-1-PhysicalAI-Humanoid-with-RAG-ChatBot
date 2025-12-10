@@ -72,6 +72,20 @@ After generating a textbook, users need to export it in various formats (PDF, eP
 - **FR-009**: System MUST provide progress indicators during the textbook generation process
 - **FR-010**: System MUST handle large requests by breaking them into manageable processing chunks
 
+### Non-Functional Requirements
+
+-   **NFR-001 (Security - Authentication & Authorization)**: The system MUST implement proper user authentication and authorization mechanisms to protect user data and control access to features.
+-   **NFR-002 (Security - Rate Limiting)**: The API endpoints MUST implement rate limiting to prevent abuse and ensure fair usage.
+-   **NFR-003 (Security - Audit)**: The system MUST undergo regular security audits and vulnerability assessments to identify and mitigate potential threats.
+-   **NFR-004 (Performance - Optimization)**: The system MUST be optimized for fast performance, particularly for generating and loading large textbooks, operating within free-tier infrastructure constraints.
+-   **NFR-005 (Performance - Caching)**: The system SHOULD implement caching mechanisms for frequently accessed content to improve response times and reduce load.
+-   **NFR-006 (Performance - Indicators)**: The user interface MUST provide clear loading states and performance indicators to improve user experience during data processing.
+-   **NFR-007 (Reliability - Error Handling)**: The application MUST include comprehensive error handling mechanisms to gracefully manage unexpected situations, provide informative feedback to users, and log errors for debugging.
+-   **NFR-008 (Reliability - Backup & Recovery)**: The system SHOULD implement backup and recovery procedures for critical data to ensure data persistence and minimize downtime.
+-   **NFR-009 (Maintainability - Documentation)**: Comprehensive documentation MUST be maintained for the system's architecture, APIs, deployment, and usage.
+-   **NFR-010 (Operability - Analytics)**: The system SHOULD incorporate analytics and usage tracking to gather insights into feature adoption and system performance.
+-   **NFR-011 (User Experience - Consistency)**: The user interface MUST adhere to consistent styling and design principles, providing a clean, modern, and minimal aesthetic, as per the project's constitution.
+
 ### Key Entities *(include if feature involves data)*
 
 - **Textbook**: A structured educational document containing chapters, sections, and pedagogical elements tailored to a specific subject and audience
