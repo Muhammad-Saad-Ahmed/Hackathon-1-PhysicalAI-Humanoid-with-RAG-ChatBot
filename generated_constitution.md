@@ -3,10 +3,7 @@ Sync Impact Report:
 Version change: N/A → 1.0.0
 Added sections: Core Principles (6 principles), Architecture Requirements, Content Validation, Success Criteria
 Removed sections: None
-Templates requiring updates: 
-- ✅ .specify/templates/plan-template.md (updated Constitution Check section)
-- ✅ .specify/templates/spec-template.md (added Constitution Validation section)
-- ✅ .specify/templates/tasks-template.md (added Constitution alignment considerations)
+Templates requiring updates: ⚠ pending (.specify/templates/plan-template.md, .specify/templates/spec-template.md, .specify/templates/tasks-template.md)
 Follow-up TODOs: None
 -->
 # Physical AI & Humanoid Robotics — Essentials Constitution

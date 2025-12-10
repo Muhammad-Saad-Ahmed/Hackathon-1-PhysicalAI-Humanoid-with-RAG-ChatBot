@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
+import ChatWidget from '@site/src/components/ChatWidget'; // Import ChatWidget
 
 import styles from './index.module.css';
 
@@ -38,6 +39,10 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        {/* Integrate ChatWidget component with a placeholder textbookId */}
+        <div style={{ maxWidth: '800px', margin: '40px auto' }}>
+          <ChatWidget textbookId="your-textbook-id-here" /> {/* Placeholder ID */}
+        </div>
       </main>
     </Layout>
   );

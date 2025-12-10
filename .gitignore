@@ -1,0 +1,21 @@
+# IDE files
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Gemini CLI specific files
+.gemini/
+.claude/
+.qwen/
+.pytest_cache/
+
+# History and specifications
+history/
+specs/
+
+# Python virtual environment
+venv/
+.venv/

@@ -1,0 +1,25 @@
+---
+sidebar_position: 3
+---
+
+# ROS2
+
+# ROS2
+
+The Robot Operating System 2 (ROS2) is a flexible framework for writing robot software. It is a set of software libraries and tools that help you build robot applications. This chapter provides an introduction to the fundamental concepts of ROS2.
+
+## Core Concepts
+
+ROS2 is built on the concept of a "graph" of nodes that communicate with each other. This modular architecture allows for complex systems to be built from smaller, reusable components.
+
+### Nodes
+
+A node is a process that performs computation. In ROS2, a single robot system is typically composed of many nodes. For example, you might have a node for controlling the motors, a node for reading sensor data, and a node for planning the robot's path.
+
+### Topics
+
+Nodes communicate with each other by publishing messages to "topics". A topic is a named bus over which messages are sent. When a node publishes a message to a topic, any other node that is subscribed to that topic will receive the message. This publish-subscribe model is a key feature of ROS2.
+
+### Services
+
+While topics are used for continuous data streams, "services" are used for request-response communication. One node can offer a service, and another node can call that service with a request and wait for a response. This is useful for actions that have a clear beginning and end, such as "take a picture" or "move to a specific location".
